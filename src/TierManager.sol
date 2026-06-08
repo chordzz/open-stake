@@ -79,11 +79,7 @@ abstract contract TierManager is Ownable {
     /// @param duration The number of seconds the tokens have been staked.
     /// @return tierId The index of the highest eligible tier (type(uint256).max if none).
     /// @return eligible Whether the user qualifies for any tier.
-    function getEligibleTier(uint256 amount, uint256 duration)
-        public
-        view
-        returns (uint256 tierId, bool eligible)
-    {
+    function getEligibleTier(uint256 amount, uint256 duration) public view returns (uint256 tierId, bool eligible) {
         uint256 highestScore;
         tierId = type(uint256).max;
 

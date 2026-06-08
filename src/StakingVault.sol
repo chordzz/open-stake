@@ -29,8 +29,8 @@ contract StakingVault is TierManager, ReentrancyGuard {
 
     /// @notice Information about a user's stake.
     struct StakeInfo {
-        uint256 amount;         // Total tokens currently staked
-        uint256 stakedAt;       // Effective timestamp (adjusted on partial unstake)
+        uint256 amount; // Total tokens currently staked
+        uint256 stakedAt; // Effective timestamp (adjusted on partial unstake)
         uint256 lastClaimedTier; // Highest tier ID already claimed (type(uint256).max = none claimed)
     }
 
@@ -64,12 +64,10 @@ contract StakingVault is TierManager, ReentrancyGuard {
     /// @param _rewardNFT The ERC-721 reward contract.
     /// @param _rewardBadge The ERC-1155 badge contract.
     /// @param _admin The admin/owner address for tier management.
-    constructor(
-        IERC20 _stakingToken,
-        RewardNFT721 _rewardNFT,
-        RewardBadge1155 _rewardBadge,
-        address _admin
-    ) TierManager() Ownable(_admin) {
+    constructor(IERC20 _stakingToken, RewardNFT721 _rewardNFT, RewardBadge1155 _rewardBadge, address _admin)
+        TierManager()
+        Ownable(_admin)
+    {
         stakingToken = _stakingToken;
         rewardNFT = _rewardNFT;
         rewardBadge = _rewardBadge;
@@ -259,11 +257,7 @@ contract StakingVault is TierManager, ReentrancyGuard {
 
         // First pass: count eligible unclaimed tiers
         for (uint256 i = 0; i < _tiers.length; i++) {
-            if (
-                info.amount >= _tiers[i].minStakeAmount
-                    && duration >= _tiers[i].minDuration
-                    && !tierClaimed[user][i]
-            ) {
+            if (info.amount >= _tiers[i].minStakeAmount && duration >= _tiers[i].minDuration && !tierClaimed[user][i]) {
                 count++;
             }
         }
@@ -272,11 +266,7 @@ contract StakingVault is TierManager, ReentrancyGuard {
         tierIds = new uint256[](count);
         uint256 idx;
         for (uint256 i = 0; i < _tiers.length; i++) {
-            if (
-                info.amount >= _tiers[i].minStakeAmount
-                    && duration >= _tiers[i].minDuration
-                    && !tierClaimed[user][i]
-            ) {
+            if (info.amount >= _tiers[i].minStakeAmount && duration >= _tiers[i].minDuration && !tierClaimed[user][i]) {
                 tierIds[idx++] = i;
             }
         }
